@@ -19,4 +19,4 @@ class Account(db.Model):
         self.account_number = ''.join(random.choices(string.digits, k=20))
         self.currency = currency
         self.balance = 0.0
-        self.status = "Active"
+        self.status = "Active"        
