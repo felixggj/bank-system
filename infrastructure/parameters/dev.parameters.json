@@ -6,19 +6,19 @@
       "value": "nonprod"
     },
     "postgreSQLServerName": {
-      "value": "ie-bank-db-server-dev"
+      "value": "felixgg-dbsrv-dev"
     },
     "postgreSQLDatabaseName": {
-      "value": "ie-bank-db"
+      "value": "felixgg-db-dev"
     },
     "appServicePlanName": {
-      "value": "ie-bank-asp-dev"
+      "value": "felixgg-asp-dev"
     },
     "appServiceAPIAppName": {
-      "value": "ie-bank-api-dev"
+      "value": "felixgg-be-dev"
     },
     "appServiceAppName": {
-      "value": "ie-bank-dev"
+      "value": "felixgg-fe-dev"
     },
     "location": {
       "value": "North Europe"

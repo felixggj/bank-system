@@ -1,7 +1,4 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: ie-bank-frontend
+name: bank-frontend
 
 on:
   push:
@@ -10,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  FRONTEND_WEBAPP_DEV: aguadamillas-fe-dev
+  FRONTEND_WEBAPP_DEV: felixgg-fe-dev
 
 jobs:
   build:
@@ -28,13 +25,14 @@ jobs:
       - name: npm install, build, and test
         run: |
           npm install
-          npm run build -- --mode development --dest dist-dev ## this command will build the vue.js app using .env.development variables into the dest-div/ folder
+          npm run build -- --mode development --dest dist-dev
+        working-directory: ./frontend # Ensure commands are run in the frontend directory
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: node-app-dev
-          path: dist-dev/
+          path: frontend/dist-dev/ # Adjust path to match the output directory of your build process
 
   deploy:
     runs-on: ubuntu-latest
@@ -58,4 +56,5 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.FRONTEND_WEBAPP_DEV }}
-          package: .
+          package: ./node-app-dev # Adjust path to match the downloaded artifact directory
+
