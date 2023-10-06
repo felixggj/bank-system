@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from dotenv import load_dotenv
 import os
+from applicationinsights.flask.ext import AppInsights
 
 app = Flask(__name__)
 
@@ -27,7 +28,8 @@ db = SQLAlchemy(app)
 
 from iebank_api.models import Account
 
-db.create_all()  # creates the database
+with app.app_context():
+    db.create_all()  # creates the database
 CORS(app)
 
 from iebank_api import routes

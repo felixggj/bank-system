@@ -21,7 +21,7 @@
       "value": "ie-bank-dev"
     },
     "location": {
-      "value": "North Europe" // Change location (has to be unique)
+      "value": "North Europe"
     }
   }
 }
