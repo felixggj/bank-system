@@ -38,7 +38,7 @@ jobs:
         run: python -m pytest --cov=iebank_api -v
         working-directory: ./backend
       - name: Upload backend artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: python-app
           path: ./backend
@@ -48,7 +48,7 @@ jobs:
     needs: backend-build
     steps:
       - name: Download backend artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: python-app
           path: .
@@ -90,7 +90,7 @@ jobs:
     needs: frontend-build
     steps:
       - name: Download frontend artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: node-app-dev
       - uses: azure/login@v1
@@ -100,7 +100,9 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.FRONTEND_WEBAPP_DEV }}
-          package: ./node-app-dev
+          package: ./node-app-dev/
+      - name: List directory contents
+        run: ls -la
 
   infra-deploy:
     runs-on: ubuntu-latest
