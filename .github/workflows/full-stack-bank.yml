@@ -72,6 +72,7 @@ jobs:
           cache: "npm"
       - name: npm install, build, and test (Frontend)
         run: |
+          cd frontend
           npm install
           npm run build -- --mode development --dest dist-dev
         working-directory: ./frontend
