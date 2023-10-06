@@ -93,6 +93,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: node-app-dev
+      - name: List directory contents
+        run: ls -la
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
@@ -101,8 +103,6 @@ jobs:
         with:
           app-name: ${{ env.FRONTEND_WEBAPP_DEV }}
           package: ./node-app-dev/
-      - name: List directory contents
-        run: ls -la
 
   infra-deploy:
     runs-on: ubuntu-latest
