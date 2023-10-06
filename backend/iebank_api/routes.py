@@ -50,14 +50,14 @@ def get_accounts():
 
 @app.route("/accounts/<int:id>", methods=["GET"])
 def get_account(id):
-    app.logger.debug("Route /accounts GET called with id: " + id)
+    app.logger.debug(f"Route /accounts GET called with id: {id}")
     account = Account.query.get(id)
     return format_account(account)
 
 
 @app.route("/accounts/<int:id>", methods=["PUT"])
 def update_account(id):
-    app.logger.debug("Route /accounts PUT called with id: " + id)
+    app.logger.debug(f"Route /accounts PUT called with id: {id}")
     account = Account.query.get(id)
     account.name = request.json["name"]
     db.session.commit()
@@ -66,7 +66,7 @@ def update_account(id):
 
 @app.route("/accounts/<int:id>", methods=["DELETE"])
 def delete_account(id):
-    app.logger.debug("Route /accounts DELETE called with id: " + id)
+    app.logger.debug(f"Route /accounts DELETE called with id: {id}")
     account = Account.query.get(id)
     db.session.delete(account)
     db.session.commit()
