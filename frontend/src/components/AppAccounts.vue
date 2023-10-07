@@ -29,6 +29,7 @@
                 <th scope="col">Account Currency</th>
                 <th scope="col">Account Status</th>
                 <th scope="col">Actions</th>
+                <th scope="col">Country</th>
               </tr>
             </thead>
             <tbody>
@@ -47,6 +48,7 @@
                     account.status
                   }}</span>
                 </td>
+                <td>{{ account.country }}</td>
                 <td>
                   <div class="btn-group" role="group">
                     <button
@@ -96,6 +98,7 @@
             >
             </b-form-input>
           </b-form-group>
+
           <b-form-group
             id="form-currency-group"
             label="Currency:"
@@ -106,6 +109,21 @@
               type="text"
               v-model="createAccountForm.currency"
               placeholder="$ or €"
+              required
+            >
+            </b-form-input>
+          </b-form-group>
+
+          <b-form-group
+            id="form-country-group"
+            label="Country:"
+            label-for="form-country-input"
+          >
+            <b-form-input
+              id="form-country-input"
+              type="text"
+              v-model="createAccountForm.country"
+              placeholder="Spain"
               required
             >
             </b-form-input>
@@ -156,6 +174,7 @@ export default {
       createAccountForm: {
         name: "",
         currency: "",
+        country: "",
       },
       editAccountForm: {
         id: "",
@@ -213,7 +232,7 @@ export default {
         .then((response) => {
           this.RESTgetAccounts();
           // For message alert
-          this.message = "Account Updated succesfully!";
+          this.message = "Account Updated successfully!";
           // To actually show the message
           this.showMessage = true;
           // To hide the message after 3 seconds
@@ -257,6 +276,7 @@ export default {
     initForm() {
       this.createAccountForm.name = "";
       this.createAccountForm.currency = "";
+      this.createAccountForm.country = "";
       this.editAccountForm.id = "";
       this.editAccountForm.name = "";
     },
@@ -268,6 +288,7 @@ export default {
       const payload = {
         name: this.createAccountForm.name,
         currency: this.createAccountForm.currency,
+        country: this.createAccountForm.country,
       };
       this.RESTcreateAccount(payload);
       this.initForm();
