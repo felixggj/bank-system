@@ -1,4 +1,4 @@
-<!-- Home Page -->
+<!-- Home Page for Bank System-->
 <template>
   <div id="home">
     <header>
