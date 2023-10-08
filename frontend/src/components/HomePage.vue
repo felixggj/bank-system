@@ -55,7 +55,7 @@ nav {
 }
 
 .headerElem:hover {
-  background-color: #45a049;
+  background-color: #22323d;
 }
 
 #title {
