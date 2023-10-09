@@ -10,7 +10,7 @@
           <b-alert v-if="showMessage" variant="success" show>{{
             message
           }}</b-alert>
-          <!-- b-alert v-if="error" variant="danger" show>{{ error }}</b-alert-->
+          <!-- b-alert v-if="error" variant="danger" show>{{ error }}</b-alet-->
 
           <button
             type="button"
