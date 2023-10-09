@@ -65,7 +65,7 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.BACKEND_WEBAPP_DEV }}
-          package: .
+          package: ./
 
   frontend-build:
     runs-on: ubuntu-latest
