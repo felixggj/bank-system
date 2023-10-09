@@ -35,10 +35,10 @@ CORS(app)
 from iebank_api import routes
 
 # Initialize Application Insights and force flushing application insights handler after each request
-# if os.getenv("ENV") == "dev":
-#     appinsights = AppInsights(app)
+if os.getenv("ENV") == "dev":
+    appinsights = AppInsights(app)
 
-#     @app.after_request
-#     def after_request(response):
-#         appinsights.flush()
-#         return response
+    @app.after_request
+    def after_request(response):
+        appinsights.flush()
+        return response

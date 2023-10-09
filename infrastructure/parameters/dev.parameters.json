@@ -20,6 +20,12 @@
     "appServiceAppName": {
       "value": "felixgg-fe-dev"
     },
+    "azureMonitorName": {
+      "value": "felixgg-am-dev"
+    },
+    "appInsightsName": {
+      "value": "felixgg-ai-dev"
+    },
     "location": {
       "value": "UK South"
     }
