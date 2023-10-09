@@ -108,7 +108,9 @@ module appService 'modules/app-service.bicep' = {
 
 output appServiceAppHostName string = appService.outputs.appServiceAppHostName
 
-/* resource azureMonitor 'Microsoft.OperationalInsights/workspaces@2020-08-01' = {
+// Monitoring section
+
+resource azureMonitor 'Microsoft.OperationalInsights/workspaces@2020-08-01' = {
   name: azureMonitorName
   location: location
 }
@@ -121,4 +123,4 @@ resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
     Application_Type: 'web'
     WorkspaceResourceId: resourceId('Microsoft.OperationalInsights/workspaces', azureMonitorName)
   }
-} */
+} 
