@@ -7,23 +7,34 @@ param environmentType string = 'nonprod'
 @sys.description('The PostgreSQL Server name')
 @minLength(3)
 @maxLength(24)
-param postgreSQLServerName string = 'felixgg-dbsrv-dev'
+
+param postgreSQLServerName string = 'ie-bank-db-server-dev'
 @sys.description('The PostgreSQL Database name')
 @minLength(3)
 @maxLength(24)
-param postgreSQLDatabaseName string = 'felixgg-db-dev'
+
+param postgreSQLDatabaseName string = 'ie-bank-db'
 @sys.description('The App Service Plan name')
 @minLength(3)
 @maxLength(24)
-param appServicePlanName string = 'felixgg-asp-dev'
+
+param appServicePlanName string = 'ie-bank-app-sp-dev'
 @sys.description('The Web App name (frontend)')
 @minLength(3)
 @maxLength(24)
-param appServiceAppName string = 'felixgg-fe-dev'
+
+param appServiceAppName string = 'ie-bank-dev'
 @sys.description('The API App name (backend)')
 @minLength(3)
 @maxLength(24)
-param appServiceAPIAppName string = 'felixgg-be-dev'
+
+param appServiceAPIAppName string = 'ie-bank-api-dev'
+
+@sys.description('The name of the Azure Monitor workspace')
+param azureMonitorName string
+@sys.description('The name of the Application Insights')
+param appInsightsName string
+
 @sys.description('The Azure location where the resources will be deployed')
 param location string = resourceGroup().location
 @sys.description('The value for the environment variable ENV')
