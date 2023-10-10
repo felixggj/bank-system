@@ -149,6 +149,14 @@ jobs:
 
   infra-deploy-dev:
     runs-on: ubuntu-latest
+    environment:
+      name: "Development"
+    env:
+      ENV: dev
+      DBHOST: felixgg-dbsrv-dev.postgres.database.azure.com
+      DBNAME: felixgg-db-dev
+      FLASK_APP: ./backend/app.py
+      FLASK_DEBUG: 1
     steps:
       - uses: actions/checkout@main
       - name: Run Bicep linter
@@ -167,6 +175,14 @@ jobs:
 
   infra-deploy-uat:
     runs-on: ubuntu-latest
+    environment:
+      name: "User Acceptance Testing"
+    env:
+      ENV: uat
+      DBHOST: felixgg-dbsrv-uat.postgres.database.azure.com
+      DBNAME: felixgg-db-uat
+      FLASK_APP: ./backend/app.py
+      FLASK_DEBUG: 1
     steps:
       - uses: actions/checkout@main
       - name: Run Bicep linter
