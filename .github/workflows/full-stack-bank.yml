@@ -78,7 +78,7 @@ jobs:
   backend-deploy-uat:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    needs: [backend-build, backend-deploy-dev]
+    needs: backend-build
     steps:
       - name: Download backend artifact
         uses: actions/download-artifact@v3
@@ -107,32 +107,32 @@ jobs:
           cache-dependency-path: frontend/package-lock.json # Specify the path to package file
 
       - name: npm install, build, and test (Frontend) - dev
+        if: github.ref != 'refs/heads/main'
         run: |
           cd frontend
           npm install
           npm run build -- --mode development --dest dist-dev
-        if: github.ref != 'refs/heads/main'
 
       - name: Upload frontend artifact
+        if: github.ref != 'refs/heads/main'
         uses: actions/upload-artifact@v3
         with:
           name: node-app-dev
           path: frontend/dist-dev/
-        if: github.ref != 'refs/heads/main'
 
       - name: npm install, build, and test (Frontend) - uat
+        if: github.ref == 'refs/heads/main'
         run: |
           cd frontend
           npm install
           npm run build -- --mode production --dest dist-production
-        if: github.ref == 'refs/heads/main'
 
       - name: Upload frontend artifact
+        if: github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v3
         with:
           name: node-app-production
           path: frontend/dist-production/
-        if: github.ref == 'refs/heads/main'
 
   frontend-deploy-dev:
     if: github.ref != 'refs/heads/main'
