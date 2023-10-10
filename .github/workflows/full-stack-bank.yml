@@ -14,7 +14,11 @@ permissions:
 env:
   BACKEND_WEBAPP_DEV: felixgg-be-dev
   FRONTEND_WEBAPP_DEV: felixgg-fe-dev
+  BACKEND_WEBAPP_UAT: felixgg-be-uat
+  FRONTEND_WEBAPP_UAT: felixgg-fe-uat
   RESOURCE_GROUP_DEV: aguadamillas_students_1
+  RESOURCE_GROUP_UAT: aguadamillas_students_1
+  SUBSCRIPTION_ID_UAT: e0b9cada-61bc-4b5a-bd7a-52c606726b3b
   SUBSCRIPTION_ID_DEV: e0b9cada-61bc-4b5a-bd7a-52c606726b3b
 
 jobs:
@@ -49,7 +53,7 @@ jobs:
           name: python-app
           path: ./backend
 
-  backend-deploy:
+  backend-deploy-dev:
     runs-on: ubuntu-latest
     needs: backend-build
     steps:
@@ -65,6 +69,24 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.BACKEND_WEBAPP_DEV }}
+          package: ./
+
+  backend-deploy-uat:
+    runs-on: ubuntu-latest
+    needs: [backend-build, backend-deploy-dev]
+    steps:
+      - name: Download backend artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: python-app
+          path: .
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Deploy to Azure Web App (Backend)
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.BACKEND_WEBAPP_UAT }}
           package: ./
 
   frontend-build:
@@ -91,7 +113,7 @@ jobs:
           name: node-app-dev
           path: frontend/dist-dev/
 
-  frontend-deploy:
+  frontend-deploy-dev:
     runs-on: ubuntu-latest
     needs: frontend-build
     steps:
@@ -108,7 +130,24 @@ jobs:
           app-name: ${{ env.FRONTEND_WEBAPP_DEV }}
           package: .
 
-  infra-deploy:
+  frontend-deploy-uat:
+    runs-on: ubuntu-latest
+    needs: [frontend-build, frontend-deploy-dev]
+    steps:
+      - name: Download frontend artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: node-app-dev
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Deploy to Azure Web App (Frontend)
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.FRONTEND_WEBAPP_UAT }}
+          package: .
+
+  infra-deploy-dev:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@main
@@ -125,3 +164,21 @@ jobs:
           resourceGroupName: ${{ env.RESOURCE_GROUP_DEV }}
           template: ./infrastructure/main.bicep
           parameters: ./infrastructure/parameters/dev.parameters.json appServiceAPIEnvVarENV=${{ vars.ENV }} appServiceAPIEnvVarDBHOST=${{ vars.DBHOST }} appServiceAPIEnvVarDBNAME=${{ vars.DBNAME }} appServiceAPIEnvVarDBPASS=${{ secrets.DBPASS }} appServiceAPIDBHostDBUSER=${{ secrets.DBUSER }} appServiceAPIDBHostFLASK_APP=${{ vars.FLASK_APP }} appServiceAPIDBHostFLASK_DEBUG=${{ vars.FLASK_DEBUG }}
+
+  infra-deploy-uat:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - name: Run Bicep linter
+        run: az bicep build --file ./main.bicep
+        working-directory: ./infrastructure
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Deploy Bicep file
+        uses: azure/arm-deploy@v1
+        with:
+          subscriptionId: ${{ env.SUBSCRIPTION_ID_UAT }}
+          resourceGroupName: ${{ env.RESOURCE_GROUP_UAT }}
+          template: ./infrastructure/main.bicep
+          parameters: ./infrastructure/parameters/dev.parameters.json appServiceAPIEnvVarENV=${{ env.ENV }} appServiceAPIEnvVarDBHOST=${{ env.DBHOST }} appServiceAPIEnvVarDBNAME=${{ env.DBNAME }} appServiceAPIEnvVarDBPASS=${{ secrets.DBPASS }} appServiceAPIDBHostDBUSER=${{ secrets.DBUSER }} appServiceAPIDBHostFLASK_APP=${{ env.FLASK_APP }} appServiceAPIDBHostFLASK_DEBUG=${{ env.FLASK_DEBUG }}
