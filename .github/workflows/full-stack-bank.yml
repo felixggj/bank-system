@@ -99,7 +99,7 @@ jobs:
         with:
           node-version: "18.x"
           cache: "npm"
-          cache-dependency-path: frontend/package-lock.json # Specify the path to package lock file
+          cache-dependency-path: frontend/package-lock.json # Specify the path to package file
 
       - name: npm install, build, and test (Frontend) - dev
         run: |
