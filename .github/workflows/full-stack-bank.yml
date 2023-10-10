@@ -1,4 +1,4 @@
-# All workflows combined
+# All workflows combined in a single file
 name: bank-fullstack
 
 on:
