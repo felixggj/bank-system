@@ -1,4 +1,4 @@
-# Bank System - DevOps Course Assignment | Felix GG
+# Bank System - DevOps Course Assignment 1 | Felix GG
 
 ## Overview
 
