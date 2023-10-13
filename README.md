@@ -58,4 +58,4 @@ The project includes a series of tests located in the `backend/tests` directory 
 
 ## Deployment
 
-Deployment configurations and workflows are defined in the `.github/workflows/full-stack-bank.yml` file, which sets up a CI/CD pipeline for the application using GitHub Actions.
+Deployment configurations and workflows are defined in the `.github/workflows/full-stack-bank.yml` file, which sets up a CI/CD pipeline for the application using GitHub Actions,
