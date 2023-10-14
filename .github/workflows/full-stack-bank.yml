@@ -174,7 +174,7 @@ jobs:
     if: github.ref != 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@main
+      - uses: actions/checkout@v2
       - name: Run Bicep linter
         run: az bicep build --file ./main.bicep
         working-directory: ./infrastructure
